@@ -21,7 +21,7 @@ int State::evaluate(){
       for(int j=0; j<BOARD_W; j++){
         switch(board.board[p][i][j]){
           case 1:
-            value[p] += 2; break;
+            value[p] += (2 + p?i:(BOARD_H-i)); break;
           case 2:
             value[p] += 6; break;
           case 3:
