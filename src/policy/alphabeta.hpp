@@ -11,9 +11,9 @@ struct Node{
   int idx;
   Node(int value, int idx):value(value), idx(idx){}
 };
-class Minimax{
+class Alphabeta{
   public:
     Node node;
     static Move get_move(State *state, int depth);
-    static Node minimax(State* state, int depth);
+    static Node alphabeta(State* state, int depth, int alpha, int beta);
 };

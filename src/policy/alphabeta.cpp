@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <climits>
 #include "../state/state.hpp"
-#include "./minimax.hpp"
+#include "./alphabeta.hpp"
 
 
 /**
@@ -11,7 +11,7 @@
  * @param depth You may need this for other policy
  * @return Move 
  */
-Move Minimax::get_move(State *state, int depth){
+Move Alphabeta::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
   
@@ -19,7 +19,7 @@ Move Minimax::get_move(State *state, int depth){
     //return actions[minimax(state, depth).idx];
     return actions[0];
 }
-Node Minimax::minimax(State* state, int depth){
+Node Alphabeta::alphabeta(State* state, int depth, int alpha, int beta){
     if(!state->legal_actions.size()){
         state->get_legal_actions();
     }
@@ -32,11 +32,13 @@ Node Minimax::minimax(State* state, int depth){
         int idx = 0;
         for(int i=0; i<actions.size(); i++){
             State* ns = state->next_state(actions[i]);
-            Node n = minimax(ns, depth-1);
+            Node n = alphabeta(ns, depth-1, alpha, beta);
             if(n.value>value){
                 value = n.value;
                 idx = i;
             }
+            alpha = std::max(alpha, value);
+            if(alpha >= beta) break;
         }
         return Node(value, idx);
     }
@@ -45,11 +47,13 @@ Node Minimax::minimax(State* state, int depth){
         int idx = 0;
         for(int i=0; i<actions.size(); i++){
             State* ns = state->next_state(actions[i]);
-            Node n = minimax(ns, depth-1);
+            Node n = alphabeta(ns, depth-1, alpha, beta);
             if(n.value<value){
                 value = n.value;
                 idx = i;
             }
+            beta = std::min(beta, value);
+            if(beta<=alpha) break;
         }
         return Node(value, idx);
     }
