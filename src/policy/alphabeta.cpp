@@ -16,8 +16,8 @@ Move Alphabeta::get_move(State *state, int depth){
     state->get_legal_actions();
   
   auto actions = state->legal_actions;
-    //return actions[minimax(state, depth).idx];
-    return actions[0];
+    return actions[alphabeta(state, depth, INT_MIN, INT_MAX).idx];
+    //return actions[0];
 }
 Node Alphabeta::alphabeta(State* state, int depth, int alpha, int beta){
     if(!state->legal_actions.size()){

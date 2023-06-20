@@ -16,8 +16,8 @@ Move Minimax::get_move(State *state, int depth){
     state->get_legal_actions();
   
   auto actions = state->legal_actions;
-    //return actions[minimax(state, depth).idx];
-    return actions[0];
+    return actions[minimax(state, depth).idx];
+    //return actions[0];
 }
 Node Minimax::minimax(State* state, int depth){
     if(!state->legal_actions.size()){
