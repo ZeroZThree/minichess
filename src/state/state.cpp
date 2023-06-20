@@ -43,18 +43,29 @@ int State::evaluate(){
           case 1:
             value[p] += (2 + p?i:(BOARD_H-i)); 
             if((i==2 || i==3) && j==2) value[p] += 1;
-            
+
             break;
           case 2:
             value[p] += 6; break;
           case 3:
-            value[p] += 7; break;
+            value[p] += 7; 
+            for(int k=0; k<8; k++){
+              for(int l=0; l<2; l++){
+                int x = i+move_table_knight[k][l];
+                int y = j+move_table_knight[k][l];
+                if(0<=x && x<BOARD_H && 0<=y && y<=BOARD_W){
+                  value[p] += 1;
+                }
+              }
+            }
+            break;
           case 4:
             value[p] += 8; 
             if(abs(i-j)==1) value[p] += 1;
             break;
           case 5:
-            value[p] += 20; break;
+            value[p] += 20; 
+            break;
           case 6:
             value[p] += 10000; 
             for(int k=0; k<8; k++){
